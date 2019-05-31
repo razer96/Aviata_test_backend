@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Список популярных направлений</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css" type="text/css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row header">
+                <div class="col-12">
+                    <h1>Список билетов по направлению <%= direction.direction.fly_from %> - <%= direction.direction.fly_to %> на <%= direction.listOfTickets[0].date.split("T")[0].split("-")[2]+'/'+direction.listOfTickets[0].date.split("T")[0].split("-")[1]+'/'+ direction.listOfTickets[0].date.split("T")[0].split("-")[0] %></h1>
+                </div>
+            </div>
+            <div class="row table-heads">
+                <div class="col-4">Дата</div>
+                <div class="col-4">Цена</div>
+            </div>
+            <div class="row table">
+                <% direction.listOfTickets.forEach(function(ticket){ %>
+                <div class="col-12">
+                    <div class="row date">
+                        <div class="col-4 date_date"><%= ticket.date.split("T")[0].split("-")[2]+'/'+ticket.date.split("T")[0].split("-")[1]+'/'+ ticket.date.split("T")[0].split("-")[0] %></div>
+                        <div class="col-4 date_price"><%= ticket.price %> тенге.</div>
+                        <div class="col-4 date_tickets"><a class="book" data-booking="<%= ticket.booking_token %>">Забронировать</a></div>
+                    </div>
+                </div>
+                <% }); %>
+            </div>
+        </div>
+        
+    </body>
+    <script>
+    $('.book').on('click', (e) => {
+        var booking_toket = $(e.target).data('booking');
+        $.get('/booking', {
+            booking_token: booking_toket
+        }, (response) => {
+            if(response.ticket_valid){
+                alert("Билет можно забронировать")
+            }else {
+                alert("Билет нельзя забронировать")   
+            }
+            if(response.price_changed){
+                alert("Цена была изменена");
+            }
+        });
+    });
+    </script>
+</html>

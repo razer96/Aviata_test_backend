@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Список популярных направлений</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css" type="text/css" >
+    </head>
+    <body>
+        <div class="container">
+                <div class="row">
+                    <div class="col-12"><h1>Топ-10 направлений</h1></div>
+                </div>
+                <div class="row popular-list">
+                    <% directions.forEach(function(dir) { %>
+                        <div class="col-3">
+                            <div class="directions-item">
+                                <div class="dir_name"><p><%= dir.direction.fly_from %> - <%= dir.direction.fly_to %></p></div>
+                                <div class="dir_price"><p><%= dir.minMonthPrice %> тенге.</p></div>
+                                <div class="dir_month_link"><a href='/directions/<%=  dir.directionKey %>'>Посмотреть цены на месяц</a></div>
+                            </div>
+                        </div>
+                    <% }); %>
+                </div>
+        </div>
+        
+    </body>
+</html>

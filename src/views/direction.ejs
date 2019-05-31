@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Список популярных направлений</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css" type="text/css" >
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row header">
+                <div class="col-12">
+                    <h1>Список наименьших цен по направлению <%= direction.direction.fly_from %> - <%= direction.direction.fly_to %> на ближайший месяц</h1>
+                </div>
+            </div>
+            <div class="row table-heads">
+                <div class="col-4">Дата</div>
+                <div class="col-4">Цена</div>
+            </div>
+            <div class="row table">
+                <% for (var key in direction.listOfMinPrices){ %>
+                <div class="col-12">
+                    <div class="row date">
+                        <div class="col-4 date_date"><%= key.split('/')[2]+"/"+key.split('/')[1]+"/"+key.split('/')[0] %></div>
+                        <div class="col-4 date_price"><%= direction.listOfMinPrices[key].minInMonth.price %> тенге.</div>
+                        <div class="col-4 date_tickets"><a href="/tickets?directionKey=<%= direction.directionKey %>&date=<%= key %>">Список билетов</a></div>
+                    </div>
+                </div>
+                <% }; %>
+            </div>
+        </div>
+        
+    </body>
+
+</html>
